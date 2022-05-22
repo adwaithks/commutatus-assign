@@ -1,0 +1,34 @@
+.employee-accordion {
+    border: rgba(36, 36, 36, 0.207) solid 1px;
+    box-shadow: 0 0 10px rgba(196, 196, 196, 0.763);
+    width: 300px;
+    border-radius: 4px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.delete-icon {
+    font-size: 2em;
+    color: red;
+}
+
+.employee-accordion-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.employee-accordion-input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 2px;
+}
+
+.caret-down-icon {
+    font-size: 1.5em !important;
+}
+
+.edit-icon {
+    font-size: 1.6em;
+}

@@ -1,38 +1,46 @@
-.App {
-  text-align: center;
+* {
+  padding: 5px;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.department {
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.ceo-name {
+  margin-bottom: 10px;
+  width: fit-content;
+  text-transform: capitalize;
+  color: white;
+  border: rgba(255, 0, 0, 0.963) solid 1px;
+  background-color: rgba(255, 0, 0, 0.449);
+  box-shadow: 0 0 10px rgba(113, 113, 113, 0.763);  border-radius: 4px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.department-name, .team-name {
+    display: flex;
+    align-items: center;
+    border: rgba(36, 36, 36, 0.207) solid 1px;
+    box-shadow: 0 0 10px rgba(196, 196, 196, 0.763);  border-radius: 4px;
+    text-transform: capitalize;
+    padding: 5px 20px 5px 20px;
+}
+
+.department-name-head, .team-name-head {
+  margin-right: 10px;
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: .5em;
+}
+
+.department-name-head {
+  background-color: black;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.team-name-head {
+  background-color: orange;
+  color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

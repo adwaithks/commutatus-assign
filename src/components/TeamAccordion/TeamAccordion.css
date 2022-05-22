@@ -1,0 +1,54 @@
+.team-accordion {
+    padding: 0;
+    margin-top: 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.team-accordion-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.team-accordion-input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 2px;
+}
+
+.caret-down-icon {
+    font-size: 1.3em;
+}
+
+.team-accordion-tab {
+    display: flex;
+    margin-bottom: 10px;
+    border: rgba(36, 36, 36, 0.207) solid 1px;
+    box-shadow: 0 0 10px rgba(142, 142, 142, 0.763);
+    border-radius: 4px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.team-accordion-label {
+    background-color: orange;
+    margin-right: 10px;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 0.8em;
+}
+
+.team-accordion-head {
+    display: flex;
+}
+
+.employee-container {
+    display: flex;
+}
+
+.team-delete-icon {
+    font-size: 1.8em;
+    color: red;
+}
