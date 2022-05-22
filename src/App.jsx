@@ -19,8 +19,9 @@ class Employee {
 }
   
 class Department {
-  constructor(name, ceo = null) {
+  constructor(name, head, ceo = null) {
     this.name = name;
+    this.head = head;
     this.parent = ceo;
     this.childrens = [];
   }
@@ -48,8 +49,9 @@ class CEO {
 
 function App() {
 
-  const {treeChanged, setTreeChanged, ceo, setCeo, departments, setDepartments, setTeams, setTeamMembers} = React.useContext(HierarchyContext);
+  const {treeChanged, setTreeChanged, ceo, setCeo} = React.useContext(HierarchyContext);
   const [departmentName, setDepartmentName] = React.useState('');
+  const [departmentHead, setDepartmentHead] = React.useState('');
   const [toTeamName, setToTeamName] = React.useState('')
   const [teamName, setTeamName] = React.useState('');
   const [employeeInfo, setEmployeeInfo] = React.useState({
@@ -62,7 +64,11 @@ function App() {
 
   React.useEffect(() => {
     setCeo(new CEO('Jiby Pappachan', '9495997660', 'adwaith@gmail.com'))
-  }, [])
+  }, []);
+
+  function departmentHeadHandler(e) {
+    setDepartmentHead(e.target.value);
+  }
 
   const toTeamNameHandler = (e) => {
     setToTeamName(e.target.value);
@@ -102,7 +108,7 @@ function App() {
 
   // given department name exists ? 
   function departmentExists(department) {
-    for (let dept of departments) {
+    for (let dept of ceo.childrens) {
       if (dept.name == department.name) {
         return true;
       }
@@ -118,13 +124,13 @@ function App() {
     }
     department.parent = ceo;
     ceo.childrens.push(department);
-    setDepartments((prev) => [...prev, department]);
+    setTreeChanged(!treeChanged);
     window.alert(department.name + " Department added!");
   }
 
   // find given department by name, and return the department node
   function findDepartment(departmentName) {
-    for (let dept of departments) {
+    for (let dept of ceo.childrens) {
       if (dept.name == departmentName) {
         return dept;
       }
@@ -138,7 +144,7 @@ function App() {
 
   // team name exists in given department ?
   function teamNameExists(departmentName, teamName) {
-    for (let dept of departments) {
+    for (let dept of ceo.childrens) {
       if (dept.name == departmentName) {
         for (let team of dept.childrens) {
             if (team.name == teamName) return true;
@@ -160,7 +166,7 @@ function App() {
       return;
     }
     team.parent = department;
-    setTeams((prev) => [...prev, team]);
+    setTreeChanged(!treeChanged);
     department.childrens.push(team);
     window.alert("New team " + team.name + " added under " + departmentName)
   }
@@ -198,7 +204,7 @@ function App() {
       return;
     }
     employee.parent = team;
-    setTeamMembers((prev) => [...prev, employee]);
+    setTreeChanged(!treeChanged);
     team.childrens.push(employee);
     window.alert("New employee " + employee.name + " added to " + team.name);
   }
@@ -274,12 +280,6 @@ function App() {
   }
 
 
-
-  /*
-  - filter employee    
-  */
-
-
   return (
     <div className="App">
       <div>
@@ -287,7 +287,7 @@ function App() {
       </div>
       <h1 className='ceo-name'>{ceo.name} | CEO</h1>
       {
-        departments.map((dept, idx) => (
+        ceo?.childrens?.map((dept, idx) => (
           <IndieDepartment key={idx} department={dept} />
         ))
       }
@@ -295,8 +295,9 @@ function App() {
         <div className='add-department'>
           <h1>Add new department</h1>
           <input onChange={departmentNameHandler} type="text" placeholder='department name' />
+          <input onChange={departmentHeadHandler} type="text" placeholder='department head' />
           <button onClick={() => {
-            let dept = new Department(departmentName);
+            let dept = new Department(departmentName, departmentHead);
             addNewDepartment(dept);
           }}>Add new dept</button>
         </div>

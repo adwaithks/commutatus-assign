@@ -9,7 +9,7 @@ function EmployeeFilter() {
   const {ceo} = React.useContext(HierarchyContext);
 
   function searchTextInHierarchy(searchText) {
-    let text = searchText.trim();
+    let text = searchText.trim().toLowerCase();
     let queue = [ceo];
     let result = [];
     let level = 0;
@@ -21,7 +21,7 @@ function EmployeeFilter() {
             if (currentNode.childrens == null) continue;
             for (let node of currentNode.childrens) {
                 if (level == 3) {
-                  if (node.name.includes(text) || node.email.includes(text) || node.phNum.includes(text)) {
+                  if (node.name.toLowerCase().includes(text) || node.email.toLowerCase().includes(text) || node.phNum.toLowerCase().includes(text)) {
                     result.push({
                       teamMember: node,
                       team: node.parent.name,

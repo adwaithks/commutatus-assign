@@ -34,6 +34,15 @@
   font-size: .5em;
 }
 
+.department-manager-head {
+  font-weight: 400;
+  font-size: .5em;
+  color: white;
+  background-color: rgba(24, 24, 24, 0.505);
+  border-radius: 4px;
+  margin-right: 20px;
+}
+
 .department-name-head {
   background-color: black;
   color: white;
