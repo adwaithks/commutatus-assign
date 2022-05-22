@@ -53,6 +53,7 @@ function App() {
   const [departmentName, setDepartmentName] = React.useState('');
   const [departmentHead, setDepartmentHead] = React.useState('');
   const [toTeamName, setToTeamName] = React.useState('')
+  const [teamLead, setTeamLead] = React.useState(false);
   const [teamName, setTeamName] = React.useState('');
   const [employeeInfo, setEmployeeInfo] = React.useState({
     id: 0,
@@ -80,6 +81,10 @@ function App() {
 
   const departmentNameHandler = (e) => {
     setDepartmentName(e.target.value);
+  }
+
+  const teamLeadHandler = (e) => {
+    setTeamLead(e.target.checked);
   }
 
   const empNameHandler = (e) => {
@@ -192,6 +197,49 @@ function App() {
     return null;
   }
 
+  function teamLeadAlreadyExists(departmentName, teamName) {
+    let queue = [ceo];
+    let level = 0;
+    while (queue.length) {
+      level += 1;
+      let length = queue.length;
+      for (let i = 0; i < length; i ++) {
+        let currentNode = queue.shift();
+        if (currentNode.childrens == null) continue;
+        for (let node of currentNode.childrens) {
+          if (level == 2 && node.name == teamName && node?.parent?.name == departmentName) {
+            for (let employee of node.childrens) {
+              if (employee.teamLead) {
+                return true;
+              }
+            }
+          }
+          queue.push(node);
+        }
+      }
+    }
+    return false;
+  }
+
+  function employeeExistsInTeam(employee, team) {
+    let queue = [team];
+
+    while(queue.length) {
+      let length = queue.length;
+      for (let i = 0; i < length; i ++) {
+        let currentNode = queue.shift();
+        for (let node of currentNode.childrens) {
+          if (employee.name.toLowerCase() == node.name.toLowerCase() 
+          || employee.email.toLowerCase() == node.email.toLowerCase()
+          || employee.phNum.toLowerCase() == node.phNum.toLowerCase()) {
+            return true;
+          }
+        }
+      }
+  }
+  return false;
+}
+
   // add new employee to team in a department
   function addNewTeamMember(employee, teamName, departmentName) {
     if (!findDepartment(departmentName)) {
@@ -201,6 +249,15 @@ function App() {
     let team = findTeam(teamName, departmentName);
     if (!team) {
       window.alert("No team named " + teamName);
+      return;
+    }
+    if (employee.teamLead) {
+      if (teamLeadAlreadyExists(departmentName, teamName)) {
+        employee.teamLead = false;
+      }
+    }
+    if (employeeExistsInTeam(employee, team)) {
+      window.alert('Employee already Exists!');
       return;
     }
     employee.parent = team;
@@ -319,8 +376,11 @@ function App() {
           <input onChange={empNameHandler} type="text" placeholder='name' />
           <input onChange={empEmailHandler} type="text" placeholder='email' />
           <input onChange={empPhoneHandler} type="text" placeholder='phone num' />
+          <label htmlFor="">Team Leader?</label>
+          <input type="checkbox" onChange={teamLeadHandler} />
           <button onClick={() => {
             let employee = new Employee(employeeInfo['name'], employeeInfo['id'], employeeInfo['phone'], employeeInfo['email']);
+            employee.teamLead = teamLead;
             addNewTeamMember(employee, teamName, departmentName)
           }}>Add new member</button>
         </div>
